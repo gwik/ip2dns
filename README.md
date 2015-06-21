@@ -1,4 +1,4 @@
-dyniptoroute53 is a command line program to set your public ip a DNS record in AWS Route 53.
+dyniptoroute53 is a simple command line tool to set your public IP address on a AWS route 53 record.
 
 *The record must be created first.*
 
