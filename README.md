@@ -1,6 +1,8 @@
-dyniptoroute53 is a simple command line tool to set your public IP address on a AWS route 53 record.
 
-*The record must be created first.*
+
+**dyniptoroute53** is a simple command line tool to set your public IP address on a AWS route 53 record.
+
+**The record must be created first.**
 
 Usage:
 ```sh
