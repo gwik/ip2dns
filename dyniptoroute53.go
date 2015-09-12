@@ -39,12 +39,11 @@ func getIP(client *http.Client) (net.IP, error) {
 	}
 
 	buf := new(bytes.Buffer)
-	_, err = io.Copy(buf, resp.Body)
-	if err != nil {
+	if _, err := io.Copy(buf, resp.Body); err != nil {
 		return nil, err
 	}
 	s, err := buf.ReadString('\n')
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 
@@ -52,7 +51,7 @@ func getIP(client *http.Client) (net.IP, error) {
 	if ip == nil {
 		return nil, fmt.Errorf("Failed to parse ip from: `%v`", s)
 	}
-	return ip, err
+	return ip, nil
 }
 
 func change(c *route53.Route53, ip net.IP, record route53.ResourceRecordSet) error {
@@ -107,6 +106,8 @@ func init() {
 func main() {
 
 	flag.Parse()
+
+	log.SetFlags(log.Lshortfile | log.LstdFlags)
 
 	if host == "" {
 		fmt.Fprintln(os.Stderr, "host required.")
